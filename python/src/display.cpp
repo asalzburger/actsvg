@@ -27,21 +27,11 @@ using surface = proto::surface<point3_collection>;
 
 namespace {
 
-/// @brief  Helper method to view surfaces given a view type
-/// @tparam view_type
-///
-/// @param ss the surfaces, @note they will be copied to apply the style
-/// @param apply_style is the boolean weather the style should be applied or not
-/// @param f is the fill object
-/// @param str is the stroke object
-///
-/// @return the surfaces
 template <typename view_type>
-auto view_surfaces(const std::vector<surface>& ss, bool apply_style = true,
-                   const style::fill& f = __s_fill,
-                   const style::stroke& str = __s_stroke) {
-
-    view_type vw;
+auto apply_view_surfaces(const view_type& vw, const std::vector<surface>& ss,
+                         bool apply_style = true,
+                         const style::fill& f = __s_fill,
+                         const style::stroke& str = __s_stroke) {
     // Loop over the surfaces and view them
     std::vector<svg::object> surfaces;
     surfaces.reserve(ss.size());
@@ -58,6 +48,29 @@ auto view_surfaces(const std::vector<surface>& ss, bool apply_style = true,
         surfaces.push_back(display::surface(s._name, s, vw));
     }
     return surfaces;
+}
+
+/// @brief  Helper method to view surfaces given a view type
+/// @tparam view_type
+///
+/// @param ss the surfaces, @note they will be copied to apply the style
+/// @param apply_style is the boolean weather the style should be applied or not
+/// @param f is the fill object
+/// @param str is the stroke object
+///
+/// @return the surfaces
+template <typename view_type>
+auto view_surfaces(const view_type& vw, const std::vector<surface>& ss,
+                   bool apply_style = true, const style::fill& f = __s_fill,
+                   const style::stroke& str = __s_stroke) {
+
+    // Z-phi view is chosen, let us set a fixed size radius
+    if constexpr (std::is_same_v<view_type, views::z_phi>) {
+        views::z_rphi zrphi;
+        zrphi._fixed_r = 100.;
+        return apply_view_surfaces(zrphi, ss, apply_style, f, str);
+    }
+    return apply_view_surfaces(vw, ss, apply_style, f, str);
 }
 
 /// @brief cast helper
@@ -228,11 +241,15 @@ void add_display_module(context& ctx) {
               [](const std::vector<surface>& ss, const std::string& view) {
                   // xy view is chosen
                   if (view == "xy") {
-                      return view_surfaces<views::x_y>(ss, false);
+                      return view_surfaces(views::x_y{}, ss, false);
                   }
                   // zphi view is chosen
                   if (view == "zphi") {
-                      return view_surfaces<views::z_phi>(ss, false);
+                      return view_surfaces(views::z_phi{}, ss, false);
+                  }
+                  // zrphi view is chosen
+                  if (view == "zrphi") {
+                      return view_surfaces(views::z_rphi{}, ss, false);
                   }
                   return std::vector<svg::object>{};
               });
@@ -250,11 +267,15 @@ void add_display_module(context& ctx) {
                  const style::stroke str, const std::string& view) {
                   // xy view is chosen
                   if (view == "xy") {
-                      return view_surfaces<views::x_y>(ss, true, f, str);
+                      return view_surfaces(views::x_y{}, ss, true, f, str);
                   }
                   // zphi view is chosen
                   if (view == "zphi") {
-                      return view_surfaces<views::z_phi>(ss, true, f, str);
+                      return view_surfaces(views::z_phi{}, ss, true, f, str);
+                  }
+                  // zrphi view is chosen
+                  if (view == "zrphi") {
+                      return view_surfaces(views::z_rphi{}, ss, true, f, str);
                   }
                   return std::vector<svg::object>{};
               });

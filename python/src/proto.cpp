@@ -42,6 +42,7 @@ void add_proto_module(context& ctx) {
                 .def_readwrite("vertices", &surface::_vertices)
                 .def_readwrite("fill", &surface::_fill)
                 .def_readwrite("stroke", &surface::_stroke)
+                .def_readwrite("radii", &surface::_radii)
                 .def_static(
                     "from_polygon",
                     [](const std::string& name, const point3_collection& pcs,
