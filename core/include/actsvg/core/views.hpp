@@ -140,8 +140,8 @@ struct z_phi {
     /// Scene setting
     scene _scene = scene();
 
-    /// Switch the phi protection on (wrapping in phi detection)
-    bool _protect_phi = true;
+    /// Switch the phi protection on: wrapping in phi detection
+    bool _protect_phi = false;
 
     /// Make it screen obvious
     std::array<std::string, 2> _axis_names = {"z", "phi"};
@@ -180,7 +180,7 @@ struct z_phi {
         phi_values.reserve(vertices_.size());
 
         for (const auto &v : vertices_) {
-            auto p2 = point(v);
+            point2 p2 = point(v);
             phi_values.push_back(v[1u]);
             c.push_back(p2);
         }
