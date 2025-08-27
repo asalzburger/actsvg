@@ -14,10 +14,10 @@
 #include <limits>
 #include <map>
 #include <optional>
+#include <ranges>
 #include <sstream>
 #include <string>
 #include <vector>
-#include <ranges>
 
 #include "defs.hpp"
 #include "style.hpp"
