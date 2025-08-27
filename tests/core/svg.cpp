@@ -22,7 +22,7 @@ TEST(core, empty_object) {
     std::stringstream ss;
 }
 
-TEST(core, file_set_view_box) {
+TEST(core, file_set_view_box_and_checksum) {
     svg::file file;
     file.set_view_box({0, 0, 100, 100});
     std::stringstream ss;
@@ -31,5 +31,5 @@ TEST(core, file_set_view_box) {
     ASSERT_TRUE(svg.find("viewBox=\"0 0 100 100\"") != std::string::npos);
 
     std::size_t checksum = file.checksum();
-    ASSERT_EQ(checksum, 3082453181u);
+    ASSERT_EQ(checksum, 3187404258u);
 }

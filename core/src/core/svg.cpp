@@ -185,9 +185,11 @@ std::stringstream file::to_stream() const {
         sstr << _html_head;
     }
     sstr << _svg_head;
-    sstr << " width=\"" << _width << "\" height=\"" << _height << "\"";
-    sstr << " viewBox=\"" << vbox[0] << " " << vbox[1] << " " << vbox[2] << " "
-         << vbox[3] << "\"";
+    sstr << " width=\"" << static_cast<int>(_width) << "\" height=\""
+         << static_cast<int>(_height) << "\"";
+    sstr << " viewBox=\"" << static_cast<int>(vbox[0]) << " "
+         << static_cast<int>(vbox[1]) << " " << static_cast<int>(vbox[2]) << " "
+         << static_cast<int>(vbox[3]) << "\"";
     sstr << _svg_def_end;
 
     // Write the definitions first

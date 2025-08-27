@@ -180,7 +180,7 @@ struct file {
 
     /// Default header tail definitions
     std::string _html_head = "<html>\n<body>\n";
-    std::string _svg_head = "<svg version=\"1.1\"";
+    std::string _svg_head = "<svg version=\"1.2\"";
 
     std::string _svg_def_end =
         " xmlns=\"http://www.w3.org/2000/svg\"  "
