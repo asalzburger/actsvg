@@ -16,13 +16,13 @@
 
 using namespace actsvg;
 
-TEST(svg, empty_object) {
+TEST(core, empty_object) {
 
     svg::object empty{"empty"};
     std::stringstream ss;
 }
 
-TEST(svg, file_set_view_box) {
+TEST(core, file_set_view_box) {
     svg::file file;
     file.set_view_box({0, 0, 100, 100});
     std::stringstream ss;
@@ -31,5 +31,5 @@ TEST(svg, file_set_view_box) {
     ASSERT_TRUE(svg.find("viewBox=\"0 0 100 100\"") != std::string::npos);
 
     std::size_t checksum = file.checksum();
-    ASSERT_EQ(checksum, 13433542403401162996);
+    ASSERT_EQ(checksum, 3082453181u);
 }

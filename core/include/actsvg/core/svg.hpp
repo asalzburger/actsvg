@@ -227,10 +227,9 @@ struct file {
     /** Dump file into a string stream */
     std::stringstream to_stream() const;
 
-    /** Produce a checksum for this file using std::hash it uses to_stream() to
-     * guarantee the same output as the operator<<
+    /** Produce a checksum for this file using a stable crc32 implementation
      */
-    std::size_t checksum() const;
+    std::uint32_t checksum() const;
 
     /** Write to ostream, it uses to_stream() */
     friend std::ostream &operator<<(std::ostream &os_, const file &f_);

@@ -18,7 +18,7 @@
 
 using namespace actsvg;
 
-TEST(text, unconnected_text) {
+TEST(core, unconnected_text) {
 
     // Set a playground
     auto pg = test::playground({-400, -400}, {400, 400});
@@ -56,11 +56,11 @@ TEST(text, unconnected_text) {
     // Checksum test against reference
     std::string test_name =
         ::testing::UnitTest::GetInstance()->current_test_info()->name();
-    std::size_t file_checksum = text_file.checksum();
+    std::uint32_t file_checksum = text_file.checksum();
     EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
-TEST(text, multiline_text) {
+TEST(core, multiline_text) {
 
     // Set a playground
     auto pg = test::playground({-400, -400}, {400, 400});
@@ -88,11 +88,11 @@ TEST(text, multiline_text) {
     // Checksum test against reference
     std::string test_name =
         ::testing::UnitTest::GetInstance()->current_test_info()->name();
-    std::size_t file_checksum = text_file.checksum();
+    std::uint32_t file_checksum = text_file.checksum();
     EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
-TEST(text, multiline_text_outside_playground) {
+TEST(core, multiline_text_outside_playground) {
 
     svg::object pgo = svg::object::create_group("playground");
 
@@ -127,6 +127,6 @@ TEST(text, multiline_text_outside_playground) {
     // Checksum test against reference
     std::string test_name =
         ::testing::UnitTest::GetInstance()->current_test_info()->name();
-    std::size_t file_checksum = text_file.checksum();
+    std::uint32_t file_checksum = text_file.checksum();
     EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }

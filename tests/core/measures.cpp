@@ -16,7 +16,7 @@
 
 using namespace actsvg;
 
-TEST(draw, measure) {
+TEST(core, measure) {
 
     // Set a playground
     auto pg = test::playground({-400, -400}, {400, 400});
@@ -75,6 +75,6 @@ TEST(draw, measure) {
     // Checksum test against reference
     std::string test_name =
         ::testing::UnitTest::GetInstance()->current_test_info()->name();
-    std::size_t file_checksum = mfile.checksum();
+    std::uint32_t file_checksum = mfile.checksum();
     EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }

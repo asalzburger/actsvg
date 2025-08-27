@@ -19,7 +19,7 @@ using namespace actsvg;
 
 using point3 = std::array<scalar, 3>;
 
-TEST(views, xy) {
+TEST(core, xy) {
     std::vector<point3> p3s = {{1., 2., 0.}, {3., 4., 0.}, {7., 8., 0.}};
 
     views::x_y x_y_view;
@@ -31,7 +31,7 @@ TEST(views, xy) {
     ASSERT_TRUE(expected == c);
 }
 
-TEST(views, zr) {
+TEST(core, zr) {
     std::vector<point3> p3s = {{1., 0., 3.}, {0., 4., 0.}, {2., 2., 2.}};
 
     views::z_r z_r_view;
@@ -44,7 +44,7 @@ TEST(views, zr) {
     ASSERT_TRUE(expected == c);
 }
 
-TEST(views, zphi) {
+TEST(core, zphi) {
     std::vector<point3> p3s = {{1., 0., 3.}, {0., 4., 0.}, {2., 2., 2.}};
 
     views::z_phi z_phi_view;
@@ -56,7 +56,7 @@ TEST(views, zphi) {
     ASSERT_TRUE(expected == c);
 }
 
-TEST(views, zrphi) {
+TEST(core, zrphi) {
     std::vector<point3> p3s = {{1., 0., 3.}, {0., 4., 0.}, {2., 2., 2.}};
 
     views::z_rphi z_rphi_view;

@@ -51,7 +51,7 @@ TEST(core, line_plain) {
     // Checksum test against reference
     std::string test_name =
         ::testing::UnitTest::GetInstance()->current_test_info()->name();
-    std::size_t file_checksum = line_file.checksum();
+    std::uint32_t file_checksum = line_file.checksum();
     EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
@@ -80,7 +80,7 @@ TEST(core, line_shifted) {
     // Checksum test against reference
     std::string test_name =
         ::testing::UnitTest::GetInstance()->current_test_info()->name();
-    std::size_t file_checksum = line_file.checksum();
+    std::uint32_t file_checksum = line_file.checksum();
     EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
@@ -108,6 +108,6 @@ TEST(core, line_scaled) {
     // Checksum test against reference
     std::string test_name =
         ::testing::UnitTest::GetInstance()->current_test_info()->name();
-    std::size_t file_checksum = line_file.checksum();
+    std::uint32_t file_checksum = line_file.checksum();
     EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }

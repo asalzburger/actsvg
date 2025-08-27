@@ -19,6 +19,7 @@
 #include "actsvg/core.hpp"
 #include "actsvg/core/defs.hpp"
 #include "actsvg/core/style.hpp"
+#include "actsvg/core/utils.hpp"
 
 namespace actsvg::svg {
 bool object::is_defined() const {
@@ -208,8 +209,8 @@ std::stringstream file::to_stream() const {
     return sstr;
 }
 
-std::size_t file::checksum() const {
-    return std::hash<std::string>{}(to_stream().str());
+std::uint32_t file::checksum() const {
+    return utils::crc32(to_stream().str());
 }
 
 std::ostream &operator<<(std::ostream &os_, const file &f_) {

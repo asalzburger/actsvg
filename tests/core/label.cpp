@@ -43,7 +43,7 @@ void test_label(style::label::horizontal h, style::label::vertical v,
     fo.close();
 
     // Checksum test against reference
-    std::size_t file_checksum = of.checksum();
+    std::uint32_t file_checksum = of.checksum();
     EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 }  // namespace

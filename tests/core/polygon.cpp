@@ -16,7 +16,7 @@
 
 using namespace actsvg;
 
-TEST(draw, triangle) {
+TEST(core, triangle) {
 
     // Set a playground
     auto pg = test::playground({-400, -400}, {400, 400});
@@ -39,11 +39,11 @@ TEST(draw, triangle) {
     // Checksum test against reference
     std::string test_name =
         ::testing::UnitTest::GetInstance()->current_test_info()->name();
-    std::size_t file_checksum = tfile0.checksum();
+    std::uint32_t file_checksum = tfile0.checksum();
     EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
-TEST(draw, triangle_shifted) {
+TEST(core, triangle_shifted) {
 
     // Set a playground
     auto pg = test::playground({-400, -400}, {400, 400});
@@ -68,11 +68,11 @@ TEST(draw, triangle_shifted) {
     // Checksum test against reference
     std::string test_name =
         ::testing::UnitTest::GetInstance()->current_test_info()->name();
-    std::size_t file_checksum = tfile0.checksum();
+    std::uint32_t file_checksum = tfile0.checksum();
     EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
-TEST(draw, triangle_rotated) {
+TEST(core, triangle_rotated) {
 
     // Set a playground
     auto pg = test::playground({-400, -400}, {400, 400});
@@ -97,11 +97,11 @@ TEST(draw, triangle_rotated) {
     // Checksum test against reference
     std::string test_name =
         ::testing::UnitTest::GetInstance()->current_test_info()->name();
-    std::size_t file_checksum = tfile0.checksum();
+    std::uint32_t file_checksum = tfile0.checksum();
     EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
-TEST(draw, triangle_rotated_shifted) {
+TEST(core, triangle_rotated_shifted) {
 
     // Set a playground
     auto pg = test::playground({-400, -400}, {400, 400});
@@ -127,11 +127,11 @@ TEST(draw, triangle_rotated_shifted) {
     // Checksum test against reference
     std::string test_name =
         ::testing::UnitTest::GetInstance()->current_test_info()->name();
-    std::size_t file_checksum = tfile0.checksum();
+    std::uint32_t file_checksum = tfile0.checksum();
     EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
-TEST(draw, triangle_scaled) {
+TEST(core, triangle_scaled) {
 
     // Set a playground
     auto pg = test::playground({-400, -400}, {400, 400});
@@ -156,11 +156,11 @@ TEST(draw, triangle_scaled) {
     // Checksum test against reference
     std::string test_name =
         ::testing::UnitTest::GetInstance()->current_test_info()->name();
-    std::size_t file_checksum = tfile0.checksum();
+    std::uint32_t file_checksum = tfile0.checksum();
     EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
-TEST(draw, triangle_highligh) {
+TEST(core, triangle_highligh) {
 
     // Set a playground
     auto pg = test::playground({-400, -400}, {400, 400});
@@ -186,11 +186,11 @@ TEST(draw, triangle_highligh) {
     // Checksum test against reference
     std::string test_name =
         ::testing::UnitTest::GetInstance()->current_test_info()->name();
-    std::size_t file_checksum = tfile1.checksum();
+    std::uint32_t file_checksum = tfile1.checksum();
     EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
-TEST(draw, disc_sector) {
+TEST(core, disc_sector) {
 
     // Set a playground
     auto pg = test::playground({-400, -400}, {400, 400});
@@ -232,6 +232,6 @@ TEST(draw, disc_sector) {
     // Checksum test against reference
     std::string test_name =
         ::testing::UnitTest::GetInstance()->current_test_info()->name();
-    std::size_t file_checksum = tfile1.checksum();
+    std::uint32_t file_checksum = tfile1.checksum();
     EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }

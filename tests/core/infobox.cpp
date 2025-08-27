@@ -67,6 +67,6 @@ TEST(core, info_box) {
     // Checksum test against reference
     std::string test_name =
         ::testing::UnitTest::GetInstance()->current_test_info()->name();
-    std::size_t file_checksum = ifile.checksum();
+    std::uint32_t file_checksum = ifile.checksum();
     EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }

@@ -8,7 +8,9 @@
 
 #pragma once
 
+#include <array>
 #include <cmath>
+#include <cstdint>
 #include <iomanip>
 #include <iostream>
 #include <sstream>
@@ -312,6 +314,30 @@ point3_container place_vertices(const point3_container &pc_,
         placed.push_back(place(p, tr_, rt_));
     }
     return placed;
+}
+
+/***
+ * @brief Computes the CRC32 checksum of a given string.
+ *
+ * @param data The input string.
+ * @return The CRC32 checksum.
+ */
+static inline std::uint32_t crc32(const std::string &data) {
+    static constexpr std::array<std::uint32_t, 256> table = [] {
+        std::array<std::uint32_t, 256> tab{};
+        for (std::uint32_t i = 0; i < 256; i++) {
+            std::uint32_t c = i;
+            for (int j = 0; j < 8; j++)
+                c = (c & 1) ? (0xEDB88320u ^ (c >> 1)) : (c >> 1);
+            tab[i] = c;
+        }
+        return tab;
+    }();
+
+    std::uint32_t crc = 0xFFFFFFFFu;
+    for (unsigned char ch : data)
+        crc = table[(crc ^ ch) & 0xFFu] ^ (crc >> 8);
+    return crc ^ 0xFFFFFFFFu;
 }
 
 }  // namespace utils

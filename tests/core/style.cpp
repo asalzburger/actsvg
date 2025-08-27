@@ -14,7 +14,7 @@
 
 using namespace actsvg;
 
-TEST(svg, fill_style) {
+TEST(core, fill_style) {
 
     svg::object colored{"red_object"};
 
@@ -31,7 +31,7 @@ TEST(svg, fill_style) {
     highlight._fill = red_hl_fill;
 }
 
-TEST(svg, stroke_style) {
+TEST(core, stroke_style) {
 
     svg::object stroked{"stroked_object"};
 
@@ -41,7 +41,7 @@ TEST(svg, stroke_style) {
     stroked._stroke = black_stroke;
 }
 
-TEST(svg, transform) {
+TEST(core, transform) {
     svg::object translated{"translated"};
     style::transform t0{{1., 2., 0.}};
     translated._transform = t0;

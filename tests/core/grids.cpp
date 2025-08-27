@@ -47,7 +47,7 @@ TEST(core, cartesian_grid) {
     // Checksum test against reference
     std::string test_name =
         ::testing::UnitTest::GetInstance()->current_test_info()->name();
-    std::size_t file_checksum = grid_file.checksum();
+    std::uint32_t file_checksum = grid_file.checksum();
     EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
@@ -87,7 +87,7 @@ TEST(core, tiled_cartesian_grid) {
     // Checksum test against reference
     std::string test_name =
         ::testing::UnitTest::GetInstance()->current_test_info()->name();
-    std::size_t file_checksum = grid_file.checksum();
+    std::uint32_t file_checksum = grid_file.checksum();
     EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
@@ -122,7 +122,7 @@ TEST(core, fan_grid) {
     // Checksum test against reference
     std::string test_name =
         ::testing::UnitTest::GetInstance()->current_test_info()->name();
-    std::size_t file_checksum = grid_file.checksum();
+    std::uint32_t file_checksum = grid_file.checksum();
     EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
@@ -181,7 +181,7 @@ TEST(core, tiled_fan_grid) {
     // Checksum test against reference
     std::string test_name =
         ::testing::UnitTest::GetInstance()->current_test_info()->name();
-    std::size_t file_checksum = grid_file.checksum();
+    std::uint32_t file_checksum = grid_file.checksum();
     EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
@@ -216,7 +216,7 @@ TEST(core, polar_grid) {
     // Checksum test against reference
     std::string test_name =
         ::testing::UnitTest::GetInstance()->current_test_info()->name();
-    std::size_t file_checksum = grid_file.checksum();
+    std::uint32_t file_checksum = grid_file.checksum();
     EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
@@ -258,6 +258,6 @@ TEST(core, tiled_polar_grid) {
     // Checksum test against reference
     std::string test_name =
         ::testing::UnitTest::GetInstance()->current_test_info()->name();
-    std::size_t file_checksum = grid_file.checksum();
+    std::uint32_t file_checksum = grid_file.checksum();
     EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }

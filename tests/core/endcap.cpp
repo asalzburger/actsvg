@@ -21,7 +21,7 @@ using namespace actsvg;
 
 auto endcap_modules = data::generate_endcap_modules();
 
-TEST(endcap, endcap_z_r_view) {
+TEST(core, endcap_z_r_view) {
 
     svg::file ec_file;
 
@@ -57,11 +57,11 @@ TEST(endcap, endcap_z_r_view) {
     // Checksum test against reference
     std::string test_name =
         ::testing::UnitTest::GetInstance()->current_test_info()->name();
-    std::size_t file_checksum = ec_file.checksum();
+    std::uint32_t file_checksum = ec_file.checksum();
     EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
-TEST(endcap, endcap_x_y_view) {
+TEST(core, endcap_x_y_view) {
 
     svg::file ec_file;
     ec_file._height = 800;
@@ -113,11 +113,11 @@ TEST(endcap, endcap_x_y_view) {
     // Checksum test against reference
     std::string test_name =
         ::testing::UnitTest::GetInstance()->current_test_info()->name();
-    std::size_t file_checksum = ec_file.checksum();
+    std::uint32_t file_checksum = ec_file.checksum();
     EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
-TEST(endcap, endcap_x_y_view_grid) {
+TEST(core, endcap_x_y_view_grid) {
 
     svg::file ec_file;
     ec_file._height = 800;
@@ -182,7 +182,6 @@ TEST(endcap, endcap_x_y_view_grid) {
             }
         };
         associations.push_back(sector_associations);
-        std::cout << std::endl;
     }
 
     // Build the connectors
@@ -205,6 +204,6 @@ TEST(endcap, endcap_x_y_view_grid) {
     // Checksum test against reference
     std::string test_name =
         ::testing::UnitTest::GetInstance()->current_test_info()->name();
-    std::size_t file_checksum = ec_file.checksum();
+    std::uint32_t file_checksum = ec_file.checksum();
     EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }

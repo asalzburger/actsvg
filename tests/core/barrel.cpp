@@ -21,7 +21,7 @@ using namespace actsvg;
 
 auto barrel_modules = data::generate_barrel_modules();
 
-TEST(barrel, barrel_x_y_view) {
+TEST(core, barrel_x_y_view) {
 
     svg::file barrel_file;
 
@@ -56,11 +56,11 @@ TEST(barrel, barrel_x_y_view) {
     /// Checksum test against reference
     std::string test_name =
         ::testing::UnitTest::GetInstance()->current_test_info()->name();
-    std::size_t file_checksum = barrel_file.checksum();
+    std::uint32_t file_checksum = barrel_file.checksum();
     EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
-TEST(barrel, barrel_z_phi_view) {
+TEST(core, barrel_z_phi_view) {
 
     svg::file barrel_file;
 
@@ -99,11 +99,11 @@ TEST(barrel, barrel_z_phi_view) {
     // Checksum test against reference
     std::string test_name =
         ::testing::UnitTest::GetInstance()->current_test_info()->name();
-    std::size_t file_checksum = barrel_file.checksum();
+    std::uint32_t file_checksum = barrel_file.checksum();
     EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
-TEST(barrel, barrel_z_phi_view_grid) {
+TEST(core, barrel_z_phi_view_grid) {
 
     svg::file barrel_file;
 
@@ -187,6 +187,6 @@ TEST(barrel, barrel_z_phi_view_grid) {
     // Checksum test against reference
     std::string test_name =
         ::testing::UnitTest::GetInstance()->current_test_info()->name();
-    std::size_t file_checksum = barrel_file.checksum();
+    std::uint32_t file_checksum = barrel_file.checksum();
     EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
