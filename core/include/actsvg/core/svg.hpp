@@ -13,8 +13,10 @@
 #include <limits>
 #include <map>
 #include <optional>
+#include <functional>
 #include <string>
 #include <vector>
+#include <sstream>
 
 #include "defs.hpp"
 #include "style.hpp"
@@ -221,7 +223,15 @@ struct file {
      */
     void set_view_box(const std::array<scalar, 4> &vb_, bool adjust_ = true);
 
-    /** Write to ostream */
+    /** Dump file into a string stream */
+    std::stringstream to_stream() const;
+
+    /** Produce a checksum for this file using std::hash it uses to_stream() to
+     * guarantee the same output as the operator<<
+     */
+    std::size_t checksum() const;
+
+    /** Write to ostream, it uses to_stream() */
     friend std::ostream &operator<<(std::ostream &os_, const file &f_);
 };
 

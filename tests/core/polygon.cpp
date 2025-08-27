@@ -11,6 +11,7 @@
 #include <fstream>
 
 #include "../common/playground.hpp"
+#include "../common/test_checksum.hpp"
 #include "actsvg/core.hpp"
 
 using namespace actsvg;
@@ -29,10 +30,17 @@ TEST(draw, triangle) {
     tfile0._objects.push_back(pg);
     tfile0._objects.push_back(tsvg0);
 
+    std::string file_name = "test_core_triangle.svg";
     std::ofstream tstream;
-    tstream.open("test_core_triangle.svg");
+    tstream.open(file_name);
     tstream << tfile0;
     tstream.close();
+
+    // Checksum test against reference
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
+    std::size_t file_checksum = tfile0.checksum();
+    EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
 TEST(draw, triangle_shifted) {
@@ -51,10 +59,17 @@ TEST(draw, triangle_shifted) {
     tfile0._objects.push_back(pg);
     tfile0._objects.push_back(tsvg0);
 
+    std::string file_name = "test_core_triangle_shifted.svg";
     std::ofstream tstream;
-    tstream.open("test_core_triangle_shifted.svg");
+    tstream.open(file_name);
     tstream << tfile0;
     tstream.close();
+
+    // Checksum test against reference
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
+    std::size_t file_checksum = tfile0.checksum();
+    EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
 TEST(draw, triangle_rotated) {
@@ -73,10 +88,17 @@ TEST(draw, triangle_rotated) {
     tfile0._objects.push_back(pg);
     tfile0._objects.push_back(tsvg0);
 
+    std::string file_name = "test_core_triangle_rotated.svg";
     std::ofstream tstream;
-    tstream.open("test_core_triangle_rotated.svg");
+    tstream.open(file_name);
     tstream << tfile0;
     tstream.close();
+
+    // Checksum test against reference
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
+    std::size_t file_checksum = tfile0.checksum();
+    EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
 TEST(draw, triangle_rotated_shifted) {
@@ -96,10 +118,17 @@ TEST(draw, triangle_rotated_shifted) {
     tfile0._objects.push_back(pg);
     tfile0._objects.push_back(tsvg0);
 
+    std::string file_name = "test_core_triangle_rotated_shifted.svg";
     std::ofstream tstream;
-    tstream.open("test_core_triangle_rotated_shifted.svg");
+    tstream.open(file_name);
     tstream << tfile0;
     tstream.close();
+
+    // Checksum test against reference
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
+    std::size_t file_checksum = tfile0.checksum();
+    EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
 TEST(draw, triangle_scaled) {
@@ -118,10 +147,17 @@ TEST(draw, triangle_scaled) {
     tfile0._objects.push_back(pg);
     tfile0._objects.push_back(tsvg0);
 
+    std::string file_name = "test_core_triangle_scaled.svg";
     std::ofstream tstream;
-    tstream.open("test_core_triangle_scaled.svg");
+    tstream.open(file_name);
     tstream << tfile0;
     tstream.close();
+
+    // Checksum test against reference
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
+    std::size_t file_checksum = tfile0.checksum();
+    EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
 TEST(draw, triangle_highligh) {
@@ -141,10 +177,17 @@ TEST(draw, triangle_highligh) {
     tfile1.add_object(pg);
     tfile1.add_object(tsvg1);
 
+    std::string file_name = "test_core_triangle_highlight.svg";
     std::ofstream tstream;
-    tstream.open("test_core_triangle_highlight.svg");
+    tstream.open(file_name);
     tstream << tfile1;
     tstream.close();
+
+    // Checksum test against reference
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
+    std::size_t file_checksum = tfile1.checksum();
+    EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
 TEST(draw, disc_sector) {
@@ -180,8 +223,15 @@ TEST(draw, disc_sector) {
     tfile1.add_object(red_sector);
     tfile1.add_object(green_sector);
 
+    std::string file_name = "test_core_sector.svg";
     std::ofstream tstream;
-    tstream.open("test_core_sector.svg");
+    tstream.open(file_name);
     tstream << tfile1;
     tstream.close();
+
+    // Checksum test against reference
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
+    std::size_t file_checksum = tfile1.checksum();
+    EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }

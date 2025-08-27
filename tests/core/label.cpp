@@ -12,6 +12,7 @@
 #include <sstream>
 
 #include "../common/playground.hpp"
+#include "../common/test_checksum.hpp"
 #include "actsvg/core/draw.hpp"
 
 using namespace actsvg;
@@ -19,13 +20,14 @@ using namespace actsvg;
 namespace {
 // Helper function
 void test_label(style::label::horizontal h, style::label::vertical v,
-                const std::string& name) {
+                const std::string& name, const std::string& test_name) {
     // Set a playground
     auto pg = test::playground({-400, -400}, {400, 400});
 
     // Write out the file
     std::ofstream fo;
-    fo.open(std::string("test_core_label_" + name + ".svg").c_str());
+    std::string file_name = "test_core_label_" + name + ".svg";
+    fo.open(file_name);
 
     auto box = draw::rectangle("box", {200, 100}, 150, 20,
                                style::fill{style::color{{255, 0, 0}}});
@@ -39,40 +41,59 @@ void test_label(style::label::horizontal h, style::label::vertical v,
     of.add_object(draw::label("label", l));
     fo << of;
     fo.close();
+
+    // Checksum test against reference
+    std::size_t file_checksum = of.checksum();
+    EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 }  // namespace
 
 TEST(core, label_left_bottom) {
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
+
     test_label(style::label::horizontal::left, style::label::vertical::bottom,
-               "left_bottom");
+               "left_bottom", test_name);
 }
 
 TEST(core, label_right_bottom) {
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
     test_label(style::label::horizontal::right, style::label::vertical::bottom,
-               "right_bottom");
+               "right_bottom", test_name);
 }
 
 TEST(core, label_left_top) {
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
     test_label(style::label::horizontal::left, style::label::vertical::top,
-               "left_top");
+               "left_top", test_name);
 }
 
 TEST(core, label_right_top) {
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
     test_label(style::label::horizontal::right, style::label::vertical::top,
-               "right_top");
+               "right_top", test_name);
 }
 
 TEST(core, label_center_center) {
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
     test_label(style::label::horizontal::center, style::label::vertical::center,
-               "center_center");
+               "center_center", test_name);
 }
 
 TEST(core, label_left_center) {
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
     test_label(style::label::horizontal::left, style::label::vertical::center,
-               "left_center");
+               "left_center", test_name);
 }
 
 TEST(core, label_right_center) {
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
     test_label(style::label::horizontal::right, style::label::vertical::center,
-               "right_center");
+               "right_center", test_name);
 }

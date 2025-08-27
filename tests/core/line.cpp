@@ -12,6 +12,7 @@
 #include <sstream>
 
 #include "../common/playground.hpp"
+#include "../common/test_checksum.hpp"
 #include "actsvg/core/draw.hpp"
 
 using namespace actsvg;
@@ -29,83 +30,84 @@ TEST(core, line) {
 
 TEST(core, line_plain) {
 
-    svg::file ftemplate;
-
     // Set a playground
     auto pg = test::playground({-400, -400}, {400, 400});
 
     // Write out the file
+    std::string file_name = "test_core_line.svg";
     std::ofstream fo;
-    fo.open("test_core_line.svg");
+    fo.open(file_name);
 
-    fo << ftemplate._html_head;
-    fo << ftemplate._svg_head;
-    fo << " width=\"900\" height=\"900\" viewBox=\"-450 -450 900 900\"";
-    fo << ftemplate._svg_def_end;
-    // Add the playground
-    fo << pg;
-    // Add the line
-    fo << draw::line("l", {40, -20.}, {80., 100.},
-                     style::stroke{style::color{{255, 0, 0}}, 2});
-    // Close the file
-    fo << ftemplate._svg_tail;
-    fo << ftemplate._html_tail;
+    auto line = draw::line("l", {4, -2.}, {8., 10.},
+                           style::stroke{style::color{{0, 0, 255}}, 2});
+
+    svg::file line_file;
+    line_file.add_object(pg);
+    line_file.add_object(line);
+
+    fo << line_file;
     fo.close();
+
+    // Checksum test against reference
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
+    std::size_t file_checksum = line_file.checksum();
+    EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
 TEST(core, line_shifted) {
 
-    svg::file ftemplate;
-
     // Set a playground
     auto pg = test::playground({-400, -400}, {400, 400});
 
     // Write out the file
+    std::string file_name = "test_core_line_shifted.svg";
     std::ofstream fo;
-    fo.open("test_core_line_shifted.svg");
+    fo.open(file_name);
 
     style::transform t{{100, 100}};
-
-    fo << ftemplate._html_head;
-    fo << ftemplate._svg_head;
-    fo << " width=\"900\" height=\"900\" viewBox=\"-450 -450 900 900\"";
-    fo << ftemplate._svg_def_end;
-    // Add the playground
-    fo << pg;
     // Add the line
-    fo << draw::line("l", {40, -20.}, {80., 100.},
-                     style::stroke{style::color{{0, 255, 0}}, 2}, t);
+    auto line = draw::line("l", {4, -2.}, {8., 10.},
+                           style::stroke{style::color{{0, 0, 255}}, 2}, t);
+    svg::file line_file;
+
+    line_file.add_object(pg);
+    line_file.add_object(line);
     // Close the file
-    fo << ftemplate._svg_tail;
-    fo << ftemplate._html_tail;
+    fo << line_file;
     fo.close();
+
+    // Checksum test against reference
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
+    std::size_t file_checksum = line_file.checksum();
+    EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
 TEST(core, line_scaled) {
 
-    svg::file ftemplate;
-
     // Set a playground
     auto pg = test::playground({-400, -400}, {400, 400});
 
     // Write out the file
+    std::string file_name = "test_core_line_scaled.svg";
     std::ofstream fo;
-    fo.open("test_core_line_scaled.svg");
+    fo.open(file_name);
 
     style::transform t;
     t._scale = {10, 10};
-
-    fo << ftemplate._html_head;
-    fo << ftemplate._svg_head;
-    fo << " width=\"900\" height=\"900\" viewBox=\"-450 -450 900 900\"";
-    fo << ftemplate._svg_def_end;
-    // Add the playground
-    fo << pg;
     // Add the line
-    fo << draw::line("l", {4, -2.}, {8., 10.},
-                     style::stroke{style::color{{0, 0, 255}}, 2}, t);
-    // Close the file
-    fo << ftemplate._svg_tail;
-    fo << ftemplate._html_tail;
+    auto line = draw::line("l", {4, -2.}, {8., 10.},
+                           style::stroke{style::color{{0, 0, 255}}, 2}, t);
+    svg::file line_file;
+    line_file.add_object(pg);
+    line_file.add_object(line);
+    fo << line_file;
     fo.close();
+
+    // Checksum test against reference
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
+    std::size_t file_checksum = line_file.checksum();
+    EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }

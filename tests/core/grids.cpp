@@ -12,20 +12,20 @@
 #include <sstream>
 
 #include "../common/playground.hpp"
+#include "../common/test_checksum.hpp"
 #include "actsvg/core/draw.hpp"
 
 using namespace actsvg;
 
 TEST(core, cartesian_grid) {
 
-    svg::file ftemplate;
-
     // Set a playground
     auto pg = test::playground({-400, -400}, {400, 400});
 
     // Write out the file
+    std::string file_name = "test_core_cartesian_grid.svg";
     std::ofstream fo;
-    fo.open("test_core_cartesian_grid.svg");
+    fo.open(file_name);
 
     // A simple cartesian grid, non-tiled
     std::vector<scalar> x_edges = {-100, -50, 0, 50, 100, 150};
@@ -38,30 +38,28 @@ TEST(core, cartesian_grid) {
     auto cartesian_grid =
         draw::cartesian_grid("nt_c_grid", x_edges, y_edges, dashed_red);
 
-    fo << ftemplate._html_head;
-    fo << ftemplate._svg_head;
-    fo << " width=\"900\" height=\"900\" viewBox=\"-450 -450 900 900\"";
-    fo << ftemplate._svg_def_end;
-    // Add the playground
-    fo << pg;
-    // Add the grid
-    fo << cartesian_grid;
-    // Close the file
-    fo << ftemplate._svg_tail;
-    fo << ftemplate._html_tail;
+    svg::file grid_file;
+    grid_file.add_object(pg);
+    grid_file.add_object(cartesian_grid);
+    fo << grid_file;
     fo.close();
+
+    // Checksum test against reference
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
+    std::size_t file_checksum = grid_file.checksum();
+    EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
 TEST(core, tiled_cartesian_grid) {
-
-    svg::file ftemplate;
 
     // Set a playground
     auto pg = test::playground({-400, -400}, {400, 400});
 
     // Write out the file
+    std::string file_name = "test_core_tiled_cartesian_grid.svg";
     std::ofstream fo;
-    fo.open("test_core_tiled_cartesian_grid.svg");
+    fo.open(file_name);
 
     // A simple cartesian grid, non-tiled
     std::vector<scalar> x_edges = {-100, -50, 0, 50, 100, 150};
@@ -80,30 +78,28 @@ TEST(core, tiled_cartesian_grid) {
     auto cartesian_grid = draw::tiled_cartesian_grid(
         "cartesian_grid", x_edges, y_edges, blue_tile, dashed_red);
 
-    fo << ftemplate._html_head;
-    fo << ftemplate._svg_head;
-    fo << " width=\"900\" height=\"900\" viewBox=\"-450 -450 900 900\"";
-    fo << ftemplate._svg_def_end;
-    // Add the playground
-    fo << pg;
-    // Add the grid
-    fo << cartesian_grid;
-    // Close the file
-    fo << ftemplate._svg_tail;
-    fo << ftemplate._html_tail;
+    svg::file grid_file;
+    grid_file.add_object(pg);
+    grid_file.add_object(cartesian_grid);
+    fo << grid_file;
     fo.close();
+
+    // Checksum test against reference
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
+    std::size_t file_checksum = grid_file.checksum();
+    EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
 TEST(core, fan_grid) {
-
-    svg::file ftemplate;
 
     // Set a playground
     auto pg = test::playground({-400, -400}, {400, 400});
 
     // Write out the file
+    std::string file_name = "test_core_fan_grid.svg";
     std::ofstream fo;
-    fo.open("test_core_fan_grid.svg");
+    fo.open(file_name);
 
     // A simple cartesian grid, non-tiled
     std::vector<scalar> x_edges_low = {-100, -50, 0, 50, 100};
@@ -117,30 +113,28 @@ TEST(core, fan_grid) {
     auto fan_grid = draw::fan_grid("fan_grid", x_edges_low, x_edges_high,
                                    y_edges, dashed_red);
 
-    fo << ftemplate._html_head;
-    fo << ftemplate._svg_head;
-    fo << " width=\"900\" height=\"900\" viewBox=\"-450 -450 900 900\"";
-    fo << ftemplate._svg_def_end;
-    // Add the playground
-    fo << pg;
-    // Add the grid
-    fo << fan_grid;
-    // Close the file
-    fo << ftemplate._svg_tail;
-    fo << ftemplate._html_tail;
+    svg::file grid_file;
+    grid_file.add_object(pg);
+    grid_file.add_object(fan_grid);
+    fo << grid_file;
     fo.close();
+
+    // Checksum test against reference
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
+    std::size_t file_checksum = grid_file.checksum();
+    EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
 TEST(core, tiled_fan_grid) {
-
-    svg::file ftemplate;
 
     // Set a playground
     auto pg = test::playground({-400, -400}, {400, 400});
 
     // Write out the file
+    std::string file_name = "test_core_tiled_fan_grid.svg";
     std::ofstream fo;
-    fo.open("test_core_tiled_fan_grid.svg");
+    fo.open(file_name);
 
     // A simple cartesian grid, non-tiled
     std::vector<scalar> x_edges_low = {-100, -50, 0, 50, 100};
@@ -178,30 +172,28 @@ TEST(core, tiled_fan_grid) {
     std::sort(tiles_test.begin(), tiles_test.end());
     ASSERT_TRUE(tiles_test == tiles_reference);
 
-    fo << ftemplate._html_head;
-    fo << ftemplate._svg_head;
-    fo << " width=\"900\" height=\"900\" viewBox=\"-450 -450 900 900\"";
-    fo << ftemplate._svg_def_end;
-    // Add the playground
-    fo << pg;
-    // Add the grid
-    fo << fan_grid;
-    // Close the file
-    fo << ftemplate._svg_tail;
-    fo << ftemplate._html_tail;
+    svg::file grid_file;
+    grid_file.add_object(pg);
+    grid_file.add_object(fan_grid);
+    fo << grid_file;
     fo.close();
+
+    // Checksum test against reference
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
+    std::size_t file_checksum = grid_file.checksum();
+    EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
 TEST(core, polar_grid) {
-
-    svg::file ftemplate;
 
     // Set a playground
     auto pg = test::playground({-400, -400}, {400, 400});
 
     // Write out the file
+    std::string file_name = "test_core_polar_grid.svg";
     std::ofstream fo;
-    fo.open("test_core_polar_grid.svg");
+    fo.open(file_name);
 
     // A simple cartesian grid, non-tiled
     std::vector<scalar> r_edges_low = {50, 75, 100, 125, 150, 175};
@@ -215,30 +207,28 @@ TEST(core, polar_grid) {
     auto polar_grid =
         draw::polar_grid("polar_grid", r_edges_low, phi_edges, dashed_red);
 
-    fo << ftemplate._html_head;
-    fo << ftemplate._svg_head;
-    fo << " width=\"900\" height=\"900\" viewBox=\"-450 -450 900 900\"";
-    fo << ftemplate._svg_def_end;
-    // Add the playground
-    fo << pg;
-    // Add the grid
-    fo << polar_grid;
-    // Close the file
-    fo << ftemplate._svg_tail;
-    fo << ftemplate._html_tail;
+    svg::file grid_file;
+    grid_file.add_object(pg);
+    grid_file.add_object(polar_grid);
+    fo << grid_file;
     fo.close();
+
+    // Checksum test against reference
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
+    std::size_t file_checksum = grid_file.checksum();
+    EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
 TEST(core, tiled_polar_grid) {
-
-    svg::file ftemplate;
 
     // Set a playground
     auto pg = test::playground({-400, -400}, {400, 400});
 
     // Write out the file
+    std::string file_name = "test_core_tiled_polar_grid.svg";
     std::ofstream fo;
-    fo.open("test_core_tiled_polar_grid.svg");
+    fo.open(file_name);
 
     // A simple cartesian grid, non-tiled
     std::vector<scalar> r_edges_low = {50, 75, 100, 125, 150, 175};
@@ -258,16 +248,16 @@ TEST(core, tiled_polar_grid) {
     auto polar_grid = draw::tiled_polar_grid(
         "polar_grid", r_edges_low, phi_edges, blue_opaque, dashed_red);
 
-    fo << ftemplate._html_head;
-    fo << ftemplate._svg_head;
-    fo << " width=\"900\" height=\"900\" viewBox=\"-450 -450 900 900\"";
-    fo << ftemplate._svg_def_end;
-    // Add the playground
-    fo << pg;
-    // Add the grid
-    fo << polar_grid;
-    // Close the file
-    fo << ftemplate._svg_tail;
-    fo << ftemplate._html_tail;
+    svg::file grid_file;
+    grid_file.add_object(pg);
+    grid_file.add_object(polar_grid);
+    // Write and close the file
+    fo << grid_file;
     fo.close();
+
+    // Checksum test against reference
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
+    std::size_t file_checksum = grid_file.checksum();
+    EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }

@@ -12,6 +12,7 @@
 #include <sstream>
 
 #include "../common/playground.hpp"
+#include "../common/test_checksum.hpp"
 #include "actsvg/core/draw.hpp"
 
 using namespace actsvg;
@@ -24,8 +25,9 @@ TEST(core, copy_triangle) {
     auto pg = test::playground({-400, -400}, {400, 400});
 
     // Write out the file
+    std::string file_name = "test_core_copy_triangle.svg";
     std::ofstream fo;
-    fo.open("test_core_copy_triangle.svg");
+    fo.open(file_name);
 
     std::vector<std::array<scalar, 2u>> triangle = {
         {-100, -100}, {-100, 100}, {100, 100}};
@@ -67,4 +69,10 @@ TEST(core, copy_triangle) {
     of.add_object(descr);
     fo << of;
     fo.close();
+
+    // Checksum test against reference
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
+    std::size_t file_checksum = of.checksum();
+    EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }

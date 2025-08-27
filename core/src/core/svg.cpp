@@ -166,10 +166,11 @@ void file::set_view_box(const std::array<scalar, 4> &vbox_, bool adjust_) {
     }
 }
 
-std::ostream &operator<<(std::ostream &os_, const file &f_) {
+std::stringstream file::to_stream() const {
+    std::stringstream sstr;
 
     std::map<std::string, svg::object> definitions;
-    for (const auto &o : f_._objects) {
+    for (const auto &o : _objects) {
         if (o._active) {
             for (const auto &d : o._definitions) {
                 definitions[d._id] = d;
@@ -177,33 +178,42 @@ std::ostream &operator<<(std::ostream &os_, const file &f_) {
         }
     }
 
-    std::array<scalar, 4> vbox = f_._view_box.value_or(f_.view_box());
+    std::array<scalar, 4> vbox = _view_box.value_or(view_box());
 
-    if (f_._add_html) {
-        os_ << f_._html_head;
+    if (_add_html) {
+        sstr << _html_head;
     }
-    os_ << f_._svg_head;
-    os_ << " width=\"" << f_._width << "\" height=\"" << f_._height << "\"";
-    os_ << " viewBox=\"" << vbox[0] << " " << vbox[1] << " " << vbox[2] << " "
-        << vbox[3] << "\"";
-    os_ << f_._svg_def_end;
+    sstr << _svg_head;
+    sstr << " width=\"" << _width << "\" height=\"" << _height << "\"";
+    sstr << " viewBox=\"" << vbox[0] << " " << vbox[1] << " " << vbox[2] << " "
+         << vbox[3] << "\"";
+    sstr << _svg_def_end;
+
     // Write the definitions first
     if (not definitions.empty()) {
-        os_ << "<defs>";
+        sstr << "<defs>";
         for (auto [key, value] : definitions) {
-            os_ << value;
+            sstr << value;
         }
-        os_ << "</defs>";
+        sstr << "</defs>";
     }
 
     // Now write the objects
-    for (auto &o : f_._objects) {
-        os_ << o;
+    std::ranges::for_each(_objects, [&sstr](const auto &o) { sstr << o; });
+
+    sstr << _svg_tail;
+    if (_add_html) {
+        sstr << _html_tail;
     }
-    os_ << f_._svg_tail;
-    if (f_._add_html) {
-        os_ << f_._html_tail;
-    }
+    return sstr;
+}
+
+std::size_t file::checksum() const {
+    return std::hash<std::string>{}(to_stream().str());
+}
+
+std::ostream &operator<<(std::ostream &os_, const file &f_) {
+    os_ << f_.to_stream().str();
     return os_;
 }
 

@@ -13,6 +13,7 @@
 #include <string>
 #include <vector>
 
+#include "../common/test_checksum.hpp"
 #include "actsvg/core.hpp"
 #include "actsvg/data/odd_pixel_endcap.hpp"
 
@@ -20,7 +21,7 @@ using namespace actsvg;
 
 auto endcap_modules = data::generate_endcap_modules();
 
-TEST(endcap, z_r_view) {
+TEST(endcap, endcap_z_r_view) {
 
     svg::file ec_file;
 
@@ -47,13 +48,20 @@ TEST(endcap, z_r_view) {
     ec_file.add_objects(modules);
 
     // File output
+    std::string file_name = "test_core_endcap_zr.svg";
     std::ofstream ec_stream;
-    ec_stream.open("test_core_endcap_zr.svg");
+    ec_stream.open(file_name);
     ec_stream << ec_file;
     ec_stream.close();
+
+    // Checksum test against reference
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
+    std::size_t file_checksum = ec_file.checksum();
+    EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
-TEST(endcap, x_y_view) {
+TEST(endcap, endcap_x_y_view) {
 
     svg::file ec_file;
     ec_file._height = 800;
@@ -96,13 +104,20 @@ TEST(endcap, x_y_view) {
     ec_file.add_objects(labels);
 
     // File output
+    std::string file_name = "test_core_endcap_xy.svg";
     std::ofstream ec_stream;
-    ec_stream.open("test_core_endcap_xy.svg");
+    ec_stream.open(file_name);
     ec_stream << ec_file;
     ec_stream.close();
+
+    // Checksum test against reference
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
+    std::size_t file_checksum = ec_file.checksum();
+    EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
-TEST(endcap, x_y_view_grid) {
+TEST(endcap, endcap_x_y_view_grid) {
 
     svg::file ec_file;
     ec_file._height = 800;
@@ -181,8 +196,15 @@ TEST(endcap, x_y_view_grid) {
     ec_file.add_objects(grid_sectors._sub_objects);
 
     // File output
+    std::string file_name = "test_core_endcap_grid_xy.svg";
     std::ofstream ec_stream;
-    ec_stream.open("test_core_endcap_grid_xy.svg");
+    ec_stream.open(file_name);
     ec_stream << ec_file;
     ec_stream.close();
+
+    // Checksum test against reference
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
+    std::size_t file_checksum = ec_file.checksum();
+    EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }

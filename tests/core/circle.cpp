@@ -12,6 +12,7 @@
 #include <sstream>
 
 #include "../common/playground.hpp"
+#include "../common/test_checksum.hpp"
 #include "actsvg/core/draw.hpp"
 #include "actsvg/core/style.hpp"
 
@@ -22,8 +23,9 @@ TEST(core, circle_plain) {
     auto pg = test::playground({-400, -400}, {400, 400});
 
     // Write out the file
+    std::string file_name = "test_core_circle.svg";
     std::ofstream fo;
-    fo.open("test_core_circle.svg");
+    fo.open(file_name);
 
     // Draw the circles
     auto cc = draw::circle("cc", {0., 0.}, 10,
@@ -42,6 +44,12 @@ TEST(core, circle_plain) {
     of.add_object(descr);
     fo << of;
     fo.close();
+
+    // Checksum test against reference
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
+    std::size_t file_checksum = of.checksum();
+    EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
 TEST(core, circle_shifted) {
@@ -52,8 +60,9 @@ TEST(core, circle_shifted) {
     style::transform t{{100, 100}};
 
     // Write out the file
+    std::string file_name = "test_core_circle_shifted.svg";
     std::ofstream fo;
-    fo.open("test_core_circle_shifted.svg");
+    fo.open(file_name);
 
     auto c = draw::circle("c", {40., -20.}, 25.,
                           style::fill{style::color{{0, 125, 0}}},
@@ -68,6 +77,12 @@ TEST(core, circle_shifted) {
     of.add_object(descr);
     fo << of;
     fo.close();
+
+    // Checksum test against reference
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
+    std::size_t file_checksum = of.checksum();
+    EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
 TEST(core, circle_scaled) {
@@ -79,8 +94,9 @@ TEST(core, circle_scaled) {
     t._scale = {25, 25};
 
     // Write out the file
+    std::string file_name = "test_core_circle_scaled.svg";
     std::ofstream fo;
-    fo.open("test_core_circle_scaled.svg");
+    fo.open(file_name);
 
     auto c = draw::circle("c", {-10., -10.}, 4,
                           style::fill{style::color{{0, 125, 0}}},
@@ -96,4 +112,10 @@ TEST(core, circle_scaled) {
     of.add_object(descr);
     fo << of;
     fo.close();
+
+    // Checksum test against reference
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
+    std::size_t file_checksum = of.checksum();
+    EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }

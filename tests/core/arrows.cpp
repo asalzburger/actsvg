@@ -11,6 +11,7 @@
 #include <fstream>
 
 #include "../common/playground.hpp"
+#include "../common/test_checksum.hpp"
 #include "actsvg/core.hpp"
 
 using namespace actsvg;
@@ -39,7 +40,14 @@ TEST(draw, arrows) {
     mfile.add_object(a2);
 
     std::ofstream tstream;
-    tstream.open("test_core_arrows.svg");
+    std::string file_name = "test_core_arrows.svg";
+    tstream.open(file_name);
     tstream << mfile;
     tstream.close();
+
+    /// Checksum test against reference
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
+    std::size_t file_checksum = mfile.checksum();
+    EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }

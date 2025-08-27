@@ -13,27 +13,25 @@
 #include <sstream>
 
 #include "../common/playground.hpp"
+#include "../common/test_checksum.hpp"
 #include "actsvg/core.hpp"
 
 using namespace actsvg;
 
 TEST(text, unconnected_text) {
 
-    svg::file ftemplate;
-
     // Set a playground
     auto pg = test::playground({-400, -400}, {400, 400});
 
     // Write out the file
+    std::string file_name = "test_core_text.svg";
     std::ofstream fo;
-    fo.open("test_core_text.svg");
+    fo.open(file_name);
 
-    fo << ftemplate._html_head;
-    fo << ftemplate._svg_head;
-    fo << " width=\"900\" height=\"900\" viewBox=\"-450 -450 900 900\"";
-    fo << ftemplate._svg_def_end;
+
     // Add the playground
-    fo << pg;
+    svg::file text_file;
+    text_file.add_object(pg);
 
     style::color red{{255, 0, 0}};
     style::font fs;
@@ -41,7 +39,8 @@ TEST(text, unconnected_text) {
     fs._fc = red;
 
     // Add the text
-    fo << draw::text("t0", {10, 10}, {"Arial test text at (10,10)"}, fs);
+    auto text = draw::text("t0", {10, 10}, {"Arial test text at (10,10)"}, fs);
+    text_file.add_object(text);
 
     style::color blue{{0, 0, 255}};
     style::font fsb;
@@ -49,17 +48,21 @@ TEST(text, unconnected_text) {
     fsb._size = 20;
     fsb._fc = blue;
 
-    fo << draw::text("t1", {20, 80}, {"Bigger Times text"}, fsb);
+    text = draw::text("t1", {20, 80}, {"Bigger Times text"}, fsb);
+    text_file.add_object(text);
 
-    // Close the file
-    fo << ftemplate._svg_tail;
-    fo << ftemplate._html_tail;
+    fo << text_file;
     fo.close();
+
+    // Checksum test against reference
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
+    std::size_t file_checksum = text_file.checksum();
+    EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
+
 }
 
 TEST(text, multiline_text) {
-
-    svg::file ftemplate;
 
     // Set a playground
     auto pg = test::playground({-400, -400}, {400, 400});
@@ -70,27 +73,28 @@ TEST(text, multiline_text) {
     fs._fc = red;
 
     // Write out the file
+    std::string file_name = "test_core_text_multiline.svg";
     std::ofstream fo;
-    fo.open("test_core_text_multiline.svg");
+    fo.open(file_name);
 
-    fo << ftemplate._html_head;
-    fo << ftemplate._svg_head;
-    fo << " width=\"900\" height=\"900\" viewBox=\"-450 -450 900 900\"";
-    fo << ftemplate._svg_def_end;
-    // Add the playground
-    fo << pg;
+    svg::file text_file;
+    text_file.add_object(pg);
 
     // Add the text
-    fo << draw::text("t0", {100, 100}, {"line 0", "line 1"}, fs);
+    auto text = draw::text("t0", {100, 100}, {"line 0", "line 1"}, fs);
+    text_file.add_object(text);
     // Close the file
-    fo << ftemplate._svg_tail;
-    fo << ftemplate._html_tail;
+    fo << text_file;
     fo.close();
+
+    // Checksum test against reference
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
+    std::size_t file_checksum = text_file.checksum();
+    EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
 TEST(text, multiline_text_outside_playground) {
-
-    svg::file ftemplate;
 
     svg::object pgo = svg::object::create_group("playground");
 
@@ -104,8 +108,11 @@ TEST(text, multiline_text_outside_playground) {
     fs._fc = red;
 
     // Write out the file, it should adapt the range for the outside text
+    std::string file_name = "test_core_text_multiline_range.svg";
     std::ofstream fo;
-    fo.open("test_core_text_multiline_range.svg");
+    fo.open(file_name);
+
+    svg::file text_file;
 
     // Add the text
     auto t0 = draw::text("t0", {500, 500}, {"line 0", "line 1", "line 2"}, fs);
@@ -115,6 +122,13 @@ TEST(text, multiline_text_outside_playground) {
     pgo.add_object(t1);
 
     // Add to the file anf write out
-    ftemplate.add_object(pgo);
-    fo << ftemplate;
+    text_file.add_object(pgo);
+    fo << text_file;
+    fo.close();
+
+    // Checksum test against reference
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
+    std::size_t file_checksum = text_file.checksum();
+    EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }

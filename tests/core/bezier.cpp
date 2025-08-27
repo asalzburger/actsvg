@@ -12,6 +12,7 @@
 #include <sstream>
 
 #include "../common/playground.hpp"
+#include "../common/test_checksum.hpp"
 #include "actsvg/core/draw.hpp"
 
 using namespace actsvg;
@@ -31,8 +32,9 @@ TEST(core, bezier_single_segment) {
     auto pg = test::playground({-400, -400}, {400, 400});
 
     // Write out the file
+    std::string file_name = "test_core_bezier_single.svg";
     std::ofstream fo;
-    fo.open("test_core_bezier_single.svg");
+    fo.open(file_name);
 
     auto c = draw::bezier("bezier", points_dirs);
 
@@ -44,6 +46,12 @@ TEST(core, bezier_single_segment) {
     of.add_object(descr);
     fo << of;
     fo.close();
+
+    // Checksum test against reference
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
+    std::size_t file_checksum = of.checksum();
+    EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
 TEST(core, bezier_spiral) {
@@ -70,8 +78,9 @@ TEST(core, bezier_spiral) {
     auto pg = test::playground({-400, -400}, {400, 400});
 
     // Write out the file
+    std::string file_name = "test_core_bezier_spiral.svg";
     std::ofstream fo;
-    fo.open("test_core_bezier_spiral.svg");
+    fo.open(file_name);
 
     auto c = draw::bezier("bezier", points_dirs);
     auto descr =
@@ -83,4 +92,10 @@ TEST(core, bezier_spiral) {
     of.add_object(descr);
     fo << of;
     fo.close();
+
+    // Checksum test against reference
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
+    std::size_t file_checksum = of.checksum();
+    EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }

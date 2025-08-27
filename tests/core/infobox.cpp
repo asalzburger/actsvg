@@ -13,6 +13,7 @@
 #include <vector>
 
 #include "../common/playground.hpp"
+#include "../common/test_checksum.hpp"
 #include "actsvg/core.hpp"
 
 using namespace actsvg;
@@ -57,8 +58,15 @@ TEST(core, info_box) {
     ifile.add_object(t);
     ifile.add_object(info_box);
 
+    std::string file_name = "test_core_infobox.svg";
     std::ofstream tstream;
-    tstream.open("test_core_infobox.svg");
+    tstream.open(file_name);
     tstream << ifile;
     tstream.close();
+
+    // Checksum test against reference
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
+    std::size_t file_checksum = ifile.checksum();
+    EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }

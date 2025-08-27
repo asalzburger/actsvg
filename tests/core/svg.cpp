@@ -29,4 +29,7 @@ TEST(svg, file_set_view_box) {
     ss << file;
     std::string svg = ss.str();
     ASSERT_TRUE(svg.find("viewBox=\"0 0 100 100\"") != std::string::npos);
+
+    std::size_t checksum = file.checksum();
+    ASSERT_EQ(checksum, 13433542403401162996);
 }

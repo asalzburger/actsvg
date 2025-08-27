@@ -15,12 +15,13 @@
 
 #include "actsvg/core.hpp"
 #include "actsvg/data/odd_pixel_barrel.hpp"
+#include "../common/test_checksum.hpp"
 
 using namespace actsvg;
 
 auto barrel_modules = data::generate_barrel_modules();
 
-TEST(barrel, x_y_view) {
+TEST(barrel, barrel_x_y_view) {
 
     svg::file barrel_file;
 
@@ -46,13 +47,20 @@ TEST(barrel, x_y_view) {
     barrel_file.add_objects(modules);
 
     // File output
+    std::string file_name = "test_core_barrel_xy.svg";
     std::ofstream barrel_stream;
-    barrel_stream.open("test_core_barrel_xy.svg");
+    barrel_stream.open(file_name);
     barrel_stream << barrel_file;
     barrel_stream.close();
+
+   /// Checksum test against reference
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
+    std::size_t file_checksum = barrel_file.checksum();
+    EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
-TEST(barrel, z_phi_view) {
+TEST(barrel, barrel_z_phi_view) {
 
     svg::file barrel_file;
 
@@ -82,13 +90,20 @@ TEST(barrel, z_phi_view) {
     barrel_file.add_objects(modules);
 
     // File output
+    std::string file_name = "test_core_barrel_zphi.svg";
     std::ofstream barrel_stream;
-    barrel_stream.open("test_core_barrel_zphi.svg");
+    barrel_stream.open(file_name);
     barrel_stream << barrel_file;
     barrel_stream.close();
+
+    // Checksum test against reference
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
+    std::size_t file_checksum = barrel_file.checksum();
+    EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
-TEST(barrel, z_phi_view_grid) {
+TEST(barrel, barrel_z_phi_view_grid) {
 
     svg::file barrel_file;
 
@@ -163,8 +178,15 @@ TEST(barrel, z_phi_view_grid) {
     barrel_file.add_objects(grid._sub_objects);
 
     // File output
+    std::string file_name = "test_core_barrel_grid_zphi.svg";
     std::ofstream barrel_stream;
-    barrel_stream.open("test_core_barrel_grid_zphi.svg");
+    barrel_stream.open(file_name);
     barrel_stream << barrel_file;
     barrel_stream.close();
+
+    // Checksum test against reference
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
+    std::size_t file_checksum = barrel_file.checksum();
+    EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }

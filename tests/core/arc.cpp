@@ -12,6 +12,7 @@
 #include <sstream>
 
 #include "../common/playground.hpp"
+#include "../common/test_checksum.hpp"
 #include "actsvg/core/draw.hpp"
 
 using namespace actsvg;
@@ -22,7 +23,8 @@ TEST(core, arc_plain) {
 
     // Write out the file
     std::ofstream fo;
-    fo.open("test_core_arc.svg");
+    std::string file_name = "test_core_arc.svg";
+    fo.open(file_name);
 
     scalar phi_min = -0.25;
     scalar phi_max = 0.75;
@@ -44,4 +46,10 @@ TEST(core, arc_plain) {
     of.add_object(descr);
     fo << of;
     fo.close();
+
+    /// Checksum test against reference
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
+    std::size_t file_checksum = of.checksum();
+    EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }

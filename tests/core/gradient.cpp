@@ -12,6 +12,7 @@
 #include <sstream>
 
 #include "../common/playground.hpp"
+#include "../common/test_checksum.hpp"
 #include "actsvg/core/draw.hpp"
 #include "actsvg/core/style.hpp"
 
@@ -50,10 +51,17 @@ TEST(core, gradient_box_linear_x) {
     mfile.add_object(g);
     mfile.add_object(gbox);
 
+    std::string file_name = "test_core_gradient_box.svg";
     std::ofstream tstream;
-    tstream.open("test_core_gradient_box.svg");
+    tstream.open(file_name);
     tstream << mfile;
     tstream.close();
+
+    // Checksum test against reference
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
+    std::size_t file_checksum = mfile.checksum();
+    EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
 TEST(core, gradient_box_vertical) {
@@ -77,10 +85,17 @@ TEST(core, gradient_box_vertical) {
     mfile.add_object(pg);
     mfile.add_object(g);
 
+    std::string file_name = "test_core_gradient_box_vertical.svg";
     std::ofstream tstream;
-    tstream.open("test_core_gradient_box_vertical.svg");
+    tstream.open(file_name);
     tstream << mfile;
     tstream.close();
+
+    // Checksum test against reference
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
+    std::size_t file_checksum = mfile.checksum();
+    EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
 TEST(core, gradient_box_vertical_label) {
@@ -104,10 +119,17 @@ TEST(core, gradient_box_vertical_label) {
     mfile.add_object(pg);
     mfile.add_object(g);
 
+    std::string file_name = "test_core_gradient_box_vertical_label.svg";
     std::ofstream tstream;
-    tstream.open("test_core_gradient_box_vertical_label.svg");
+    tstream.open(file_name);
     tstream << mfile;
     tstream.close();
+
+    // Checksum test against reference
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
+    std::size_t file_checksum = mfile.checksum();
+    EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
 TEST(core, gradient_box_horizontal) {
@@ -131,10 +153,17 @@ TEST(core, gradient_box_horizontal) {
     mfile.add_object(pg);
     mfile.add_object(g);
 
+    std::string file_name = "test_core_gradient_box_horizontal.svg";
     std::ofstream tstream;
-    tstream.open("test_core_gradient_box_horizontal.svg");
+    tstream.open(file_name);
     tstream << mfile;
     tstream.close();
+
+    // Checksum test against reference
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
+    std::size_t file_checksum = mfile.checksum();
+    EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
 
 TEST(core, gradient_box_horizontal_label) {
@@ -159,8 +188,15 @@ TEST(core, gradient_box_horizontal_label) {
     mfile.add_object(pg);
     mfile.add_object(g);
 
+    std::string file_name = "test_core_gradient_box_horizontal_label.svg";
     std::ofstream tstream;
-    tstream.open("test_core_gradient_box_horizontal_label.svg");
+    tstream.open(file_name);
     tstream << mfile;
     tstream.close();
+
+    // Checksum test against reference
+    std::string test_name =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
+    std::size_t file_checksum = mfile.checksum();
+    EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
 }
