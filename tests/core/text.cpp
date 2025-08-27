@@ -28,7 +28,6 @@ TEST(text, unconnected_text) {
     std::ofstream fo;
     fo.open(file_name);
 
-
     // Add the playground
     svg::file text_file;
     text_file.add_object(pg);
@@ -59,7 +58,6 @@ TEST(text, unconnected_text) {
         ::testing::UnitTest::GetInstance()->current_test_info()->name();
     std::size_t file_checksum = text_file.checksum();
     EXPECT_TRUE(test::checksum(test_name, file_name, file_checksum));
-
 }
 
 TEST(text, multiline_text) {

@@ -13,9 +13,9 @@
 #include <string>
 #include <vector>
 
+#include "../common/test_checksum.hpp"
 #include "actsvg/core.hpp"
 #include "actsvg/data/odd_pixel_barrel.hpp"
-#include "../common/test_checksum.hpp"
 
 using namespace actsvg;
 
@@ -53,7 +53,7 @@ TEST(barrel, barrel_x_y_view) {
     barrel_stream << barrel_file;
     barrel_stream.close();
 
-   /// Checksum test against reference
+    /// Checksum test against reference
     std::string test_name =
         ::testing::UnitTest::GetInstance()->current_test_info()->name();
     std::size_t file_checksum = barrel_file.checksum();

@@ -10,13 +10,14 @@
 
 #include <algorithm>
 #include <array>
+#include <functional>
 #include <limits>
 #include <map>
 #include <optional>
-#include <functional>
+#include <sstream>
 #include <string>
 #include <vector>
-#include <sstream>
+#include <ranges>
 
 #include "defs.hpp"
 #include "style.hpp"
